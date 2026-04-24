@@ -1,4 +1,5 @@
 ﻿using Spoleto.Common.Helpers;
+using Spoleto.Marking.TsPiot.Exceptions;
 using Spoleto.Marking.TsPiot.Models;
 using Spoleto.Marking.TsPiot.Options;
 
@@ -114,11 +115,12 @@ namespace Spoleto.Marking.TsPiot.Extensions
             var result = codesCheckResult.CodesResponse?.CodeResponses?.FirstOrDefault();
             if (result == null)
             {
-                return null; //todo:
+                throw new TsPiotException("Ошибка проверки. Результат не был получен");
             }
 
             var simpleResult = new SimpleVerificationResult();
-            simpleResult.IsCheckedOffline =result.IsCheckedOffline;
+            simpleResult.IsCheckedOffline = result.IsCheckedOffline;
+            simpleResult.IsEmergencyMode = codesCheckResult.IsEmergencyMode;
             simpleResult.ReqTimestamp = (long)result.ReqTimestamp;
             simpleResult.ReqId = result.ReqId;
             simpleResult.VerificationResultItems = new List<SimpleVerificationResultItem>();
@@ -130,10 +132,10 @@ namespace Spoleto.Marking.TsPiot.Extensions
             return simpleResult;
         }
 
-        private static SimpleVerificationResultItem AsSimpleResult(this CodeInfo codeInfo, CodeResponse codeResponse) => new ()
+        private static SimpleVerificationResultItem AsSimpleResult(this CodeInfo codeInfo, CodeResponse codeResponse) => new()
         {
             MarkingCode = codeInfo.Cis,
-            Success = codeResponse.IsCheckedOffline 
+            Success = codeResponse.IsCheckedOffline
             ? !codeInfo.IsBlocked && codeResponse.Code == 0
             : codeInfo.Found && codeInfo.Utilised && codeInfo.Verified && !codeInfo.Sold && !codeInfo.IsBlocked && codeInfo.Realizable,
             Message = codeInfo.ErrorMessage,

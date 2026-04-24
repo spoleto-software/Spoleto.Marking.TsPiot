@@ -8,6 +8,11 @@
         public bool IsCheckedOffline { get; set; }
 
         /// <summary>
+        /// Признак того, что был получен аварийный код 203
+        /// </summary>
+        public bool IsEmergencyMode { get; set; }
+
+        /// <summary>
         /// Список КМ
         /// </summary>
         public List<SimpleVerificationResultItem> VerificationResultItems { get; set; }

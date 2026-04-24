@@ -66,7 +66,7 @@ namespace Spoleto.Marking.TsPiot.Clients
 
             _logger?.LogInformation("Проверка {Count} КМ.", request.Codes.Count);
 
-            var res = await ExecuteAsync<CodesCheckResult>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/codes/check").ThrowIfHttpError(false).WithJsonContent(request).Build(), cancellationToken);
+            var res = await ExecuteAsync<CodesCheckResult>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/codes/check").ThrowIfHttpError(false).WithJsonContent(request).Build(), cancellationToken).ConfigureAwait(false);
 
             return res;
         }
@@ -75,7 +75,7 @@ namespace Spoleto.Marking.TsPiot.Clients
         {
             _logger?.LogInformation("Запрос информации о ТС ПИоТ.");
 
-            var res = await ExecuteAsync<TsPiotInfo>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/info").ThrowIfHttpError(false).Build(), cancellationToken);
+            var res = await ExecuteAsync<TsPiotInfo>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/info").Build(), cancellationToken).ConfigureAwait(false);
 
             return res;
         }
@@ -96,11 +96,11 @@ namespace Spoleto.Marking.TsPiot.Clients
                     {
                         var restRequest = requestFactory();
 
-                        var restResponse = await _restClient.ExecuteAsStringAsync(restRequest, resilienceCt);
+                        var restResponse = await _restClient.ExecuteAsStringAsync(restRequest, resilienceCt).ConfigureAwait(false);
 
                         return restResponse;
                     },
-                    ct);
+                    ct).ConfigureAwait(false);
             }
             catch (TsPiotNoRetryException)
             {

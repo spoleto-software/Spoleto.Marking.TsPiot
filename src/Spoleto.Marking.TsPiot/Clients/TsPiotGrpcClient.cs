@@ -1,10 +1,8 @@
 ﻿using System.Net.Security;
-using System.Threading.Channels;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
 using Polly;
-using Polly.Retry;
 using Polly.Timeout;
 using Spoleto.Marking.TsPiot.Exceptions;
 using Spoleto.Marking.TsPiot.Extensions;
@@ -73,13 +71,13 @@ namespace Spoleto.Marking.TsPiot.Clients
                 var response = await _client.CheckCodesAsync(
                     request,
                     deadline: deadline,
-                    cancellationToken: ct);
+                    cancellationToken: ct).ConfigureAwait(false);
 
                 LogResult(response);
 
                 return response;
             },
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
             return res.ToDto();
         }
@@ -93,9 +91,9 @@ namespace Spoleto.Marking.TsPiot.Clients
                 return await _client.GetTsPiotInfoAsync(
                     new Google.Protobuf.WellKnownTypes.Empty(),
                     deadline: deadline,
-                    cancellationToken: ct);
+                    cancellationToken: ct).ConfigureAwait(false);
             },
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
             return res.ToDto();
         }
@@ -111,7 +109,7 @@ namespace Spoleto.Marking.TsPiot.Clients
                     {
                         try
                         {
-                            return await action(deadline, resilienceCt);
+                            return await action(deadline, resilienceCt).ConfigureAwait(false);
                         }
                         catch (RpcException ex)
                         {
@@ -122,7 +120,7 @@ namespace Spoleto.Marking.TsPiot.Clients
                             throw;
                         }
                     },
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (TimeoutRejectedException ex)
             {

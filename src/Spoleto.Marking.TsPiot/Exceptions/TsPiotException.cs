@@ -3,9 +3,10 @@
     /// <summary>
     /// Исключение при общей HTTP-ошибке или исчерпании всех попыток.
     /// </summary>
-    public sealed class TsPiotException : Exception
+    public class TsPiotException : Exception
     {
         public TsPiotException(string message) : base(message) { }
+
         public TsPiotException(string message, Exception inner) : base(message, inner) { }
     }
 }

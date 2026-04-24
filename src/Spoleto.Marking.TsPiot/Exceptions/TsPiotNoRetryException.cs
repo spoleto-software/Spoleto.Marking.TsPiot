@@ -4,7 +4,7 @@
     /// Выбрасывается политикой retry при получении HTTP 400 Bad Request.
     /// Повторные попытки для этого исключения не выполняются.
     /// </summary>
-    public sealed class TsPiotNoRetryException : Exception
+    public sealed class TsPiotNoRetryException : TsPiotException
     {
         public TsPiotNoRetryException(string message) : base(message) { }
 

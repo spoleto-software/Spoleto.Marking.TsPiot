@@ -119,7 +119,8 @@ namespace Spoleto.Marking.TsPiot.Extensions
                     IsEmergencyMode = true,
                     Code = codesCheckResult.Code,
                     Message = codesCheckResult.Message,
-                    Details = codesCheckResult.Details
+                    Details = codesCheckResult.Details,
+                    RawJson = codesCheckResult.RawJson
                 };
             }
 
@@ -134,6 +135,7 @@ namespace Spoleto.Marking.TsPiot.Extensions
             simpleResult.IsEmergencyMode = codesCheckResult.IsEmergencyMode;
             simpleResult.ReqTimestamp = (long)result.ReqTimestamp;
             simpleResult.ReqId = result.ReqId;
+            simpleResult.RawJson = codesCheckResult.RawJson;
             simpleResult.VerificationResultItems = result.Codes.Select(x => x.AsSimpleResult(result)).ToList();
 
             return simpleResult;

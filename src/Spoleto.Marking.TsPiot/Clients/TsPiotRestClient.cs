@@ -66,7 +66,8 @@ namespace Spoleto.Marking.TsPiot.Clients
 
             _logger?.LogInformation("Проверка {Count} КМ.", request.Codes.Count);
 
-            var res = await ExecuteAsync<CodesCheckResult>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/codes/check").ThrowIfHttpError(false).WithJsonContent(request).Build(), cancellationToken).ConfigureAwait(false);
+            var (res, json) = await ExecuteAsync<CodesCheckResult>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/codes/check").ThrowIfHttpError(false).WithJsonContent(request).Build(), cancellationToken).ConfigureAwait(false);
+            res.RawJson = json;
 
             return res;
         }
@@ -75,7 +76,7 @@ namespace Spoleto.Marking.TsPiot.Clients
         {
             _logger?.LogInformation("Запрос информации о ТС ПИоТ.");
 
-            var res = await ExecuteAsync<TsPiotInfo>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/info").Build(), cancellationToken).ConfigureAwait(false);
+            var (res, json) = await ExecuteAsync<TsPiotInfo>(() => new RestRequestFactory(RestHttpMethod.Post, "api/v1/info").Build(), cancellationToken).ConfigureAwait(false);
 
             return res;
         }
@@ -85,7 +86,7 @@ namespace Spoleto.Marking.TsPiot.Clients
         /// Фабрика <paramref name="requestFactory"/> вызывается на каждой попытке,
         /// поскольку <see cref="HttpRequestMessage"/> не допускает повторной отправки.
         /// </summary>
-        private async Task<T> ExecuteAsync<T>(Func<RestRequest> requestFactory, CancellationToken ct) where T : class
+        private async Task<(T Result, string RawJson)> ExecuteAsync<T>(Func<RestRequest> requestFactory, CancellationToken ct) where T : class
         {
             TextRestResponse response;
 
@@ -121,7 +122,7 @@ namespace Spoleto.Marking.TsPiot.Clients
 
             var objectResult = SerializationManager.Deserialize<T>(json);
 
-            return objectResult;
+            return (objectResult, json);
         }
 
         /// <summary>

@@ -23,6 +23,7 @@ namespace Spoleto.Marking.TsPiot.Tests
 
             // Assert
             Assert.That(res, Is.Not.Null);
+            Assert.That(simple, Is.Not.Null);
         }
 
         [Test]
@@ -40,6 +41,7 @@ namespace Spoleto.Marking.TsPiot.Tests
             // Assert
             Assert.That(res, Is.Not.Null);
             Assert.That(res.IsEmergencyMode, Is.True);
+            Assert.That(simple, Is.Not.Null);
         }
 
         [Test]

@@ -24,5 +24,8 @@ namespace Spoleto.Marking.TsPiot.Models
 
         [JsonIgnore]
         public bool IsEmergencyMode => Code == 203;
+
+        [JsonIgnore]
+        public string RawJson { get; set; }
     }
 }

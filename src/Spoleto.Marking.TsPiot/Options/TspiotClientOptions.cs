@@ -4,7 +4,7 @@
     {
         public string ServiceUrl { get; set; }
 
-        public TspiotClientRetryOptions RetryOptions { get; set; }
+        public TsPiotClientRetryOptions RetryOptions { get; set; }
 
         public TsPiotClientAppOptions AppOptions { get; set; }
     }

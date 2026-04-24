@@ -11,7 +11,7 @@ namespace Spoleto.Marking.TsPiot.ResiliencePipelines
     public static class GrpcResiliencePipeline
     {
         /// <summary>
-        /// Строит <see cref="ResiliencePipeline"/> по настройкам из <see cref="TspiotClientRetryOptions"/>.<br/><br/>
+        /// Строит <see cref="ResiliencePipeline"/> по настройкам из <see cref="TsPiotClientRetryOptions"/>.<br/><br/>
         ///
         /// Логика:
         /// <list type="bullet">
@@ -21,12 +21,12 @@ namespace Spoleto.Marking.TsPiot.ResiliencePipelines
         ///   <item><see cref="StatusCode.DeadlineExceeded"/> — превышен дедлайн попытки.</item>
         ///   <item><see cref="StatusCode.Internal"/> — внутренняя ошибка сервера.</item>
         /// </list>
-        ///   <item>Таймаут одной попытки (<see cref="TspiotClientRetryOptions.AttemptTimeoutSeconds"/>).</item>
-        ///   <item>Общий таймаут цепочки (<see cref="TspiotClientRetryOptions.TotalTimeoutSeconds"/>).</item>
+        ///   <item>Таймаут одной попытки (<see cref="TsPiotClientRetryOptions.AttemptTimeoutSeconds"/>).</item>
+        ///   <item>Общий таймаут цепочки (<see cref="TsPiotClientRetryOptions.TotalTimeoutSeconds"/>).</item>
         /// </list>
         /// </summary>
         public static ResiliencePipeline Build(
-            TspiotClientRetryOptions settings,
+            TsPiotClientRetryOptions settings,
             ILogger? logger = null)
         {
             return new ResiliencePipelineBuilder()

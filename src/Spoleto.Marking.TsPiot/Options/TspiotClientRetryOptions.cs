@@ -1,6 +1,6 @@
 ﻿namespace Spoleto.Marking.TsPiot.Options
 {
-    public record TspiotClientRetryOptions
+    public record TsPiotClientRetryOptions
     {
         /// <summary>
         /// Таймаут одной HTTP-попытки в секундах.

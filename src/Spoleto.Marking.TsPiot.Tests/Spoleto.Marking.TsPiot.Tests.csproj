@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Spoleto.Marking.Tspiot\Spoleto.Marking.TsPiot.csproj" />
+        <ProjectReference Include="..\Spoleto.Marking.TsPiot\Spoleto.Marking.TsPiot.csproj" />
     </ItemGroup>
 
     <ItemGroup>

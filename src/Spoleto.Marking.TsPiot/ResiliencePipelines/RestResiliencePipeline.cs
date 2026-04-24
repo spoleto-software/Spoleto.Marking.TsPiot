@@ -11,19 +11,19 @@ namespace Spoleto.Marking.TsPiot.ResiliencePipelines
     public static class RestResiliencePipeline
     {
         /// <summary>
-        /// Строит <see cref="ResiliencePipeline{TextRestResponse}"/> по настройкам из <see cref="TspiotClientRetryOptions"/>.<br/><br/>
+        /// Строит <see cref="ResiliencePipeline{TextRestResponse}"/> по настройкам из <see cref="TsPiotClientRetryOptions"/>.<br/><br/>
         ///
         /// Логика:
         /// <list type="bullet">
         ///   <item>200-е коды → успех, без повтора.</item>
         ///   <item>400 → <see cref="TsPiotNoRetryException"/>, без повтора.</item>
         ///   <item>500, 514 → повтор с экспоненциальным backoff.</item>
-        ///   <item>Таймаут одной попытки (<see cref="TspiotClientRetryOptions.AttemptTimeoutSeconds"/>).</item>
-        ///   <item>Общий таймаут цепочки (<see cref="TspiotClientRetryOptions.TotalTimeoutSeconds"/>).</item>
+        ///   <item>Таймаут одной попытки (<see cref="TsPiotClientRetryOptions.AttemptTimeoutSeconds"/>).</item>
+        ///   <item>Общий таймаут цепочки (<see cref="TsPiotClientRetryOptions.TotalTimeoutSeconds"/>).</item>
         /// </list>
         /// </summary>
         public static ResiliencePipeline<TextRestResponse> Build(
-            TspiotClientRetryOptions settings,
+            TsPiotClientRetryOptions settings,
             ILogger? logger = null)
         {
             return new ResiliencePipelineBuilder<TextRestResponse>()

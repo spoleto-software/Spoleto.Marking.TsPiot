@@ -1,5 +1,9 @@
 # Spoleto.Marking.TsPiot
 
+[![](https://img.shields.io/github/license/spoleto-software/Spoleto.Marking.TsPiot)](https://github.com/spoleto-software/Spoleto.Marking.TsPiot/blob/main/LICENSE)
+[![](https://img.shields.io/nuget/v/Spoleto.Marking.TsPiot)](https://www.nuget.org/packages/Spoleto.Marking.TsPiot/)
+![Build](https://github.com/spoleto-software/Spoleto.Marking.TsPiot/actions/workflows/ci.yml/badge.svg)
+
 .NET 8 клиент для интеграции с Драйвером ТС ПИоТ (ЕСМ) через gRPC / REST.
 
 ---

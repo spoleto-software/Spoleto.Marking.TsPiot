@@ -26,5 +26,11 @@
         /// Дата и время регистрации запроса (в UTC)
         /// </summary>
         public long? ReqTimestamp { get; set; }
+
+        public int? Code { get; set; }
+
+        public string Message { get; set; }
+
+        public List<string>? Details { get; set; }
     }
 }

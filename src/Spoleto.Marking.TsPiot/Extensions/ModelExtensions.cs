@@ -5,7 +5,7 @@ using Spoleto.Marking.TsPiot.Options;
 
 namespace Spoleto.Marking.TsPiot.Extensions
 {
-    internal static class ModelExtensions
+    public static class ModelExtensions
     {
         public static ClientInfo ToRestClientInfo(this TsPiotClientAppOptions appOptions)
         {
@@ -112,6 +112,17 @@ namespace Spoleto.Marking.TsPiot.Extensions
 
         public static SimpleVerificationResult AsSimpleResult(this CodesCheckResult codesCheckResult)
         {
+            if (codesCheckResult.IsEmergencyMode)
+            {
+                return new SimpleVerificationResult
+                {
+                    IsEmergencyMode = true,
+                    Code = codesCheckResult.Code,
+                    Message = codesCheckResult.Message,
+                    Details = codesCheckResult.Details
+                };
+            }
+
             var result = codesCheckResult.CodesResponse?.CodeResponses?.FirstOrDefault();
             if (result == null)
             {
@@ -123,12 +134,8 @@ namespace Spoleto.Marking.TsPiot.Extensions
             simpleResult.IsEmergencyMode = codesCheckResult.IsEmergencyMode;
             simpleResult.ReqTimestamp = (long)result.ReqTimestamp;
             simpleResult.ReqId = result.ReqId;
-            simpleResult.VerificationResultItems = new List<SimpleVerificationResultItem>();
-            foreach (var item in result.Codes)
-            {
-                var simpleItem = item.AsSimpleResult(result);
-                simpleResult.VerificationResultItems.Add(simpleItem);
-            }
+            simpleResult.VerificationResultItems = result.Codes.Select(x => x.AsSimpleResult(result)).ToList();
+
             return simpleResult;
         }
 

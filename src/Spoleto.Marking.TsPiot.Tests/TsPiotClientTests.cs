@@ -1,5 +1,6 @@
 ﻿using Spoleto.Marking.TsPiot.Clients;
 using Spoleto.Marking.TsPiot.Exceptions;
+using Spoleto.Marking.TsPiot.Extensions;
 using Spoleto.Marking.TsPiot.Options;
 
 namespace Spoleto.Marking.TsPiot.Tests
@@ -18,6 +19,7 @@ namespace Spoleto.Marking.TsPiot.Tests
 
             // Act
             var res = await client.CheckCodesAsync(codes);
+            var simple = res.AsSimpleResult();
 
             // Assert
             Assert.That(res, Is.Not.Null);
@@ -33,6 +35,7 @@ namespace Spoleto.Marking.TsPiot.Tests
 
             // Act
             var res = await client.CheckCodesAsync(codes);
+            var simple = res.AsSimpleResult();
 
             // Assert
             Assert.That(res, Is.Not.Null);

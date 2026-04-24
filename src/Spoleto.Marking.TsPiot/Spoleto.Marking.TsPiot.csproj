@@ -6,6 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+    <!-- Package info -->
+    <PropertyGroup>
+        <Title>Spoleto.Marking.TsPiot</Title>
+        <PackageId>Spoleto.Marking.TsPiot</PackageId>
+        <Description>.NET client for integrating with TS PIOT (ESM) to validate product marking codes via gRPC or REST.</Description>
+    </PropertyGroup>
+
+
     <ItemGroup>
         <!-- Main proto file that imports annotations -->
         <Protobuf Include="Protos\imc_checker.proto" GrpcServices="Client" AdditionalImportDirs="Protos/" />

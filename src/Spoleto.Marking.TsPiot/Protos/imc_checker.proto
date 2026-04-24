@@ -1,0 +1,113 @@
+//.proto файл для генерации gRPC-клиента:
+
+syntax = "proto3";
+
+option csharp_namespace = "Spoleto.Marking.TsPiot.Grpc";
+ 
+package imc_checker;
+ 
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+ 
+// Информация об экземпляре ТС ПИоТ
+message TsPiotInfo {
+    string TsPiot_id = 1;
+    string kkt_serial = 2;
+    string fn_serial = 3;
+    string kkt_inn = 4;
+	uint32 codes_check_timeout = 5;
+}
+ 
+// Информация о кассовом ПО
+message ClientInfo {
+    string name = 1; // Полное наименование
+    string version = 2; // Версия
+    string id = 3; // Идентификатор
+    string token = 4; // Ключ доступа / ЭЦП
+}
+ 
+// Список КИ / КиЗ
+message Codes {
+    string cis = 1;
+    optional bool found = 2;
+    optional bool valid = 3;
+    string print_view = 4;
+    string gtin = 5;
+    repeated uint32 group_ids = 6;
+    optional bool verified = 7;
+    optional bool realizable = 8;
+    optional bool utilised = 9;
+    optional string expire_date = 10;
+    optional string variable_expirations = 11;
+    optional string production_date = 12;
+    optional string product_weight = 13;
+    optional string pr_vet_document = 14;
+    optional bool is_owner = 15;   
+    optional bool is_blocked = 16;
+    repeated string ogvs = 17;
+    optional string message = 18;
+    optional uint32 error_code = 19;
+    optional bool is_tracking = 20;
+    optional bool sold = 21;
+    optional uint32 elimination_state = 22;
+    optional uint32 mrp = 23;
+    optional uint32 smp = 24;
+    optional bool grayZone = 25;
+    optional uint32 inner_unit_count = 26;
+    optional uint32 sold_unit_count = 27;  
+    optional string package_type = 28;
+    optional string parent = 29;
+    optional string producer_inn = 30;
+    optional string production_serial_number = 31;
+    optional string production_batch_nubmer = 32;
+    optional string factory_serial_number = 33;
+    optional uint32 package_quantity = 34; 
+}
+ 
+// Ответ на проверку КМ от сервера
+message CodeResponse {
+    uint32 code = 1; // Результат обработки операции
+    string desctiption = 2; // Текстовое описание результата обработки операции
+    repeated Codes codes = 3;   
+    string req_id = 4;
+    uint64 req_timestamp = 5;
+    bool is_checked_offline = 6; // Флаг проверки в ЛМ ЧЗ
+}
+ 
+message CodesResponse {
+    repeated CodeResponse codes_response = 1;
+}
+ 
+message Error {
+    uint32 error_code = 1;
+    string error_description = 2;
+}
+ 
+// Результат проверки марки
+message CodesCheckResult {
+    oneof result {
+        CodesResponse codes_response = 1;
+        Error error = 2;
+    }
+}
+ 
+message CodesCheckRequest {
+    repeated string codes = 1; // Список КМ для проверки
+    ClientInfo client_info = 2; // Информация о кассовом ПО, запрашивающем проверку
+}
+ 
+// Сервис проверки марок
+service CodesCheckService {
+    rpc CheckCodes (CodesCheckRequest) returns (CodesCheckResult) {
+        option (google.api.http) = {
+            post: "api/v1/codes/check"
+            body: "*"
+        };
+    }
+    rpc GetTsPiotInfo (google.protobuf.Empty) returns (TsPiotInfo) {
+        option (google.api.http) = {
+            post: "api/v1/info"
+            body: "*"
+        };
+    }
+}

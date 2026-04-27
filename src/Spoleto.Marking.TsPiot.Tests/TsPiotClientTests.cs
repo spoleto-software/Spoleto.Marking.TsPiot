@@ -58,5 +58,19 @@ namespace Spoleto.Marking.TsPiot.Tests
                 await client.CheckCodesAsync(codes);
             });
         }
+
+        [Test]
+        public async Task GetInfoTest()
+        {
+            // Arrange
+            var settings = ConfigurationHelper.GetOptions();
+            var client = GetClient(settings);
+
+            // Act
+            var res = await client.GetInfoAsync();
+
+            // Assert
+            Assert.That(res, Is.Not.Null);
+        }
     }
 }

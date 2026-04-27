@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Spoleto.Marking.TsPiot.JsonConverters;
 
 namespace Spoleto.Marking.TsPiot.Models
 {
@@ -10,7 +11,7 @@ namespace Spoleto.Marking.TsPiot.Models
         /// <summary>
         /// Идентификатор ТС ПИоТ.
         /// </summary>
-        [JsonPropertyName("TsPiotId")]
+        [JsonPropertyName("tspiotId")]
         public string TsPiotId { get; set; } 
 
         /// <summary>
@@ -35,6 +36,10 @@ namespace Spoleto.Marking.TsPiot.Models
         /// Таймаут проверки КМ (мс).
         /// </summary>
         [JsonPropertyName("codesCheckTimeout")]
+        [JsonConverter(typeof(UIntFromStringConverter))]
         public uint CodesCheckTimeout { get; set; }
+
+        [JsonPropertyName("lm")]
+        public LmInfo? Lm { get; set; }
     }
 }

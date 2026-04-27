@@ -2,10 +2,10 @@
 {
     public record TsPiotClientOptions
     {
-        public string ServiceUrl { get; set; }
+        public string ServiceUrl { get; init; }
 
-        public TsPiotClientRetryOptions RetryOptions { get; set; }
+        public TsPiotClientRetryOptions RetryOptions { get; init; } = new();
 
-        public TsPiotClientAppOptions AppOptions { get; set; }
+        public TsPiotClientAppOptions AppOptions { get; init; }
     }
 }

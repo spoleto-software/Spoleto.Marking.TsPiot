@@ -21,9 +21,12 @@ namespace Spoleto.Marking.TsPiot.Tests
             var res = await client.CheckCodesAsync(codes);
             var simple = res.AsSimpleResult();
 
-            // Assert
-            Assert.That(res, Is.Not.Null);
-            Assert.That(simple, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(res, Is.Not.Null);
+                Assert.That(simple, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -39,9 +42,12 @@ namespace Spoleto.Marking.TsPiot.Tests
             var simple = res.AsSimpleResult();
 
             // Assert
-            Assert.That(res, Is.Not.Null);
-            Assert.That(res.IsEmergencyMode, Is.True);
-            Assert.That(simple, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(res, Is.Not.Null);
+                Assert.That(res.IsEmergencyMode, Is.True);
+                Assert.That(simple, Is.Not.Null);
+            });
         }
 
         [Test]

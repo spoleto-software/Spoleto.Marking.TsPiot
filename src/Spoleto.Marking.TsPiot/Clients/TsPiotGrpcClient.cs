@@ -1,4 +1,5 @@
 ﻿using System.Net.Security;
+using System.Text;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
@@ -57,12 +58,18 @@ namespace Spoleto.Marking.TsPiot.Clients
 
         public async Task<CodesCheckResult> CheckCodesAsync(IEnumerable<string> codes, CancellationToken cancellationToken = default)
         {
+            var codeList = codes.ToList();
+
+            _logger?.LogInformation("CheckCodesAsync: проверка {Count} кодов: {Codes}",
+                codeList.Count,
+                string.Join(", ", codeList));
+
             var request = new Grpc.CodesCheckRequest
             {
                 ClientInfo = _settings.AppOptions.ToGrpcClientInfo()
             };
 
-            request.Codes.AddRange(codes);
+            request.Codes.AddRange(codeList.Select(code => Convert.ToBase64String(Encoding.UTF8.GetBytes(code))));
 
             var res = await ExecuteAsync(async (deadline, ct) =>
             {

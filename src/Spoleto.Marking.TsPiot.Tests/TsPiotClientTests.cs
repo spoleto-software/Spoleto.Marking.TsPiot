@@ -21,9 +21,9 @@ namespace Spoleto.Marking.TsPiot.Tests
             var res = await client.CheckCodesAsync(codes);
             var simple = res.AsSimpleResult();
 
+            // Assert
             Assert.Multiple(() =>
             {
-                // Assert
                 Assert.That(res, Is.Not.Null);
                 Assert.That(simple, Is.Not.Null);
             });
@@ -51,17 +51,22 @@ namespace Spoleto.Marking.TsPiot.Tests
         }
 
         [Test]
-        public void CheckUnsuccessfulCodesTest()
+        public async Task CheckUnsuccessfulCodesTest()
         {
             // Arrange
             var settings = ConfigurationHelper.GetOptions();
             var client = GetClient(settings);
             var codes = ConfigurationHelper.GetUnsuccessfulCodes();
 
-            // Act + Assert
-            Assert.ThrowsAsync<TsPiotException>(async () =>
+            // Act
+            var res = await client.CheckCodesAsync(codes);
+            var simple = res.AsSimpleResult();
+
+            // Assert
+            Assert.Multiple(() =>
             {
-                await client.CheckCodesAsync(codes);
+                Assert.That(res, Is.Not.Null);
+                Assert.That(simple, Is.Not.Null);
             });
         }
 

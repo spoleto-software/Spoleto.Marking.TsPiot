@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text;
+using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Timeout;
 using Spoleto.Marking.TsPiot.Exceptions;
@@ -57,12 +58,18 @@ namespace Spoleto.Marking.TsPiot.Clients
 
         public async Task<CodesCheckResult> CheckCodesAsync(IEnumerable<string> codes, CancellationToken cancellationToken = default)
         {
+            var codeList = codes.ToList();
+
+            _logger?.LogInformation("CheckCodesAsync: проверка {Count} кодов: {Codes}",
+                codeList.Count,
+                string.Join(", ", codeList));
+
             var request = new CodesCheckRequest
             {
                 ClientInfo = _settings.AppOptions.ToRestClientInfo()
             };
 
-            request.Codes.AddRange(codes);
+            request.Codes.AddRange(codeList.Select(code => Convert.ToBase64String(Encoding.UTF8.GetBytes(code))));
 
             _logger?.LogInformation("Проверка {Count} КМ.", request.Codes.Count);
 

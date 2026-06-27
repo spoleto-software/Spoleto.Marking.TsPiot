@@ -1,6 +1,6 @@
 ﻿namespace Spoleto.Marking.TsPiot.Models
 {
-    public record SimpleVerificationResultItem
+    public record SimpleVerificationResultItem : ISimpleVerificationResultItem
     {
         /// <summary>
         /// КМ из запроса

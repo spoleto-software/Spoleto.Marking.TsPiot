@@ -1,6 +1,6 @@
 ﻿namespace Spoleto.Marking.TsPiot.Models
 {
-    public record SimpleVerificationResult
+    public record SimpleVerificationResult : ISimpleVerificationResult
     {
         /// <summary>
         /// Признак проверки марки в оффлайн режиме.
@@ -16,6 +16,8 @@
         /// Список КМ
         /// </summary>
         public List<SimpleVerificationResultItem> VerificationResultItems { get; set; }
+
+        IReadOnlyList<ISimpleVerificationResultItem> ISimpleVerificationResult.VerificationResultItems => VerificationResultItems;
 
         /// <summary>
         /// Уникальный идентификатор запроса

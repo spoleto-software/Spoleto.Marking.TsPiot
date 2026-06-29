@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Spoleto.Marking.TsPiot.JsonConverters;
 
 namespace Spoleto.Marking.TsPiot.Models
 {
@@ -11,7 +12,8 @@ namespace Spoleto.Marking.TsPiot.Models
         public string Status { get; set; }
 
         [JsonPropertyName("lastSync")]
-        public string LastSync { get; set; }
+        [JsonConverter(typeof(UIntFromStringConverter))]
+        public uint LastSync { get; set; }
 
         [JsonPropertyName("token")]
         public string Token { get; set; }

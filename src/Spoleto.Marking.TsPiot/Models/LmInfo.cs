@@ -12,8 +12,11 @@ namespace Spoleto.Marking.TsPiot.Models
         public string Status { get; set; }
 
         [JsonPropertyName("lastSync")]
-        [JsonConverter(typeof(UIntFromStringConverter))]
-        public uint LastSync { get; set; }
+        [JsonConverter(typeof(FlexibleLongConverter))]
+        public long LastSyncMilliseconds { get; set; }
+
+        [JsonIgnore]
+        public DateTime LastSync => DateTimeOffset.FromUnixTimeMilliseconds(LastSyncMilliseconds).DateTime;
 
         [JsonPropertyName("token")]
         public string Token { get; set; }

@@ -148,8 +148,8 @@ namespace Spoleto.Marking.TsPiot.Extensions
             ? !codeInfo.IsBlocked && codeResponse.Code == 0 && (codeInfo.ErrorCode == null || codeInfo.ErrorCode == 0)
             : codeInfo.Found && codeInfo.Utilised && codeInfo.Verified && !codeInfo.Sold && !codeInfo.IsBlocked && codeInfo.Realizable && (codeInfo.ErrorCode == null || codeInfo.ErrorCode == 0),
             Message = codeInfo.ErrorMessage,
-            Inst = codeInfo.Inst,
-            Version = codeInfo.Version,
+            Inst = codeResponse.Inst ?? codeInfo.Inst,
+            Version = codeResponse.Version ?? codeInfo.Version,
             AdditionalInfo = JsonHelper.ToJson(codeInfo),
         };
     }

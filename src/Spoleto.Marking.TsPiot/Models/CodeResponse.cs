@@ -39,5 +39,17 @@ namespace Spoleto.Marking.TsPiot.Models
         /// </summary>
         [JsonPropertyName("isCheckedOffline")]
         public bool IsCheckedOffline { get; set; }
+
+        /// <summary>
+        /// ID локального модуля Честный ЗНАК.
+        /// </summary>
+        [JsonPropertyName("inst")]
+        public string? Inst { get; set; }
+
+        /// <summary>
+        /// Версия локального модуля.
+        /// </summary>
+        [JsonPropertyName("version")]
+        public string? Version { get; set; }
     }
 }
